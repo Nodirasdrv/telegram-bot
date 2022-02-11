@@ -1,5 +1,3 @@
-print ("hello Nodira")
-print("YO samat")
 import telebot
 from decouple import config
 from telebot import types
@@ -9,36 +7,67 @@ bot = telebot.TeleBot(
 )
 
 
-@bot.message_handler(commands=["start", "hi", "Hi"])
+@bot.message_handler(commands=["start"])
 def answer_start(message):
     print(message.from_user.id)
-    text = f"Welcome to bot {message.from_user.first_name}" \
-           f" {message.from_user.last_name}!" \
-           f" Choose the course you want to attend."
+    text = f"Hi, {message.from_user.first_name}" \
+           f" {message.from_user.last_name}! " \
+           f"Do you want to order some coffee?" \
+           f" What kind of coffee do you want to order?"
     keyboard_in = types.InlineKeyboardMarkup()
-    btn_1 = types.InlineKeyboardButton(text="Python", callback_data="python")
-    btn_2 = types.InlineKeyboardButton(text="Java", callback_data="java")
-    keyboard_in.add(btn_1, btn_2)
+    btn_1 = types.InlineKeyboardButton(text="Capuccino", callback_data="capuccino")
+    btn_2 = types.InlineKeyboardButton(text="Latte", callback_data="latte")
+    btn_3 = types.InlineKeyboardButton(text="Espresso", callback_data="espresso")
+    btn_4 = types.InlineKeyboardButton(text="Macchiato", callback_data="macchiato")
+    btn_5 = types.InlineKeyboardButton(text="Frappe", callback_data="frappe")
+    keyboard_in.add(btn_1, btn_2, btn_3, btn_4, btn_5)
 
     bot.send_message(message.chat.id, text, reply_markup=keyboard_in)
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def send_course(call):
-    if call.data == "python":
+    if call.data == "capuccino":
         murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn_1 = types.KeyboardButton("Python morning")
-        btn_2 = types.KeyboardButton("Python evening")
-        btn_3 = types.KeyboardButton("Python bootcamp")
+        btn_1 = types.KeyboardButton("Capuccino Grande - 0.7ml")
+        btn_2 = types.KeyboardButton("Capuccino Tall - 0.4ml")
+        btn_3 = types.KeyboardButton("Capuccino Short - 0.2ml")
         murkup_reply.add(btn_1, btn_2, btn_3)
         text = f"You chose {call.data}!"
         bot.send_message(call.message.chat.id, text,
                          reply_markup=murkup_reply)
-    elif call.data == "java":
+    elif call.data == "latte":
         murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn_1 = types.KeyboardButton("Java morning")
-        btn_2 = types.KeyboardButton("Java evening")
-        btn_3 = types.KeyboardButton("Java bootcamp")
+        btn_1 = types.KeyboardButton("Latte Grande - 0.7ml")
+        btn_2 = types.KeyboardButton("Latte Tall - 0.4ml")
+        btn_3 = types.KeyboardButton("Latte Short - 0.2ml")
+        murkup_reply.add(btn_1, btn_2, btn_3)
+        text = f"You chose {call.data}!"
+        bot.send_message(call.message.chat.id, text,
+                         reply_markup=murkup_reply)
+    elif call.data == "espresso":
+        murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn_1 = types.KeyboardButton("Espresso Grande - 0.5ml")
+        btn_2 = types.KeyboardButton("Espresso Tall - 0.3ml")
+        btn_3 = types.KeyboardButton("Espresso Short - 0.2ml")
+        murkup_reply.add(btn_1, btn_2, btn_3)
+        text = f"You chose {call.data}!"
+        bot.send_message(call.message.chat.id, text,
+                         reply_markup=murkup_reply)
+    elif call.data == "macchiato":
+        murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn_1 = types.KeyboardButton("Macchiato Grande - 0.9ml")
+        btn_2 = types.KeyboardButton("Macchiato Tall - 0.7ml")
+        btn_3 = types.KeyboardButton("Macchiato Short - 0.5ml")
+        murkup_reply.add(btn_1, btn_2, btn_3)
+        text = f"You chose {call.data}!"
+        bot.send_message(call.message.chat.id, text,
+                         reply_markup=murkup_reply)
+    elif call.data == "frappe":
+        murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn_1 = types.KeyboardButton("Frappe Grande - 0.7ml")
+        btn_2 = types.KeyboardButton("Frappe Tall - 0.6ml")
+        btn_3 = types.KeyboardButton("Frappe Short - 0.5ml")
         murkup_reply.add(btn_1, btn_2, btn_3)
         text = f"You chose {call.data}!"
         bot.send_message(call.message.chat.id, text,
@@ -47,36 +76,79 @@ def send_course(call):
 
 @bot.message_handler(content_types=["text"])
 def send_good_message(message):
-    if message.text == "Python morning":
+    if message.text == "Capuccino Grande - 0.7ml":
         bot.send_message(
             message.chat.id,
-            "You have been submitted to the course python morning! "
-            "Manager will contact you!")
-    elif message.text == "Python evening":
+            "It will cost you 6.99$")
+    elif message.text == "Capuccino Tall - 0.4ml":
         bot.send_message(
             message.chat.id,
-            "Python evening, Yay!"
+            "It will cost you 4.99$"
         )
-    elif message.text == "Python bootcamp":
+    elif message.text == "Capuccino Short - 0.2ml":
         bot.send_message(
             message.chat.id,
-            "Wow, you chose python bootcamp!!"
+            "It will cost you 3.99$"
         )
-    elif message.text == "Java morning":
+    elif message.text == "Latte Grande - 0.7ml":
         bot.send_message(
             message.chat.id,
-            "You have been submitted to the course java morning! "
-            "Manager will contact you!")
-    elif message.text == "Java evening":
+            "It will cost you 7.99$")
+    elif message.text == "Latte Tall - 0.4ml":
         bot.send_message(
             message.chat.id,
-            "Java evening, Yay!"
+            "It will cost you 6.99$"
         )
-    elif message.text == "Java bootcamp":
+    elif message.text == "Latte Short - 0.2ml":
         bot.send_message(
             message.chat.id,
-            "Wow, you chose java bootcamp!!"
+            "It will cost you 5.99$"
         )
+    elif message.text == "Espresso Grande - 0.5ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 3.99$"
+        )
+    elif message.text == "Espresso Tall - 0.3ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 2.99$"
+            )
+    elif message.text == "Espresso Short - 0.2ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 1.99$"
+            )
+    elif message.text == "Macchiato Grande - 0.9ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 8.99$"
+            )
+    elif message.text == "Macchiato Tall - 0.7ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 7.99$"
+            )
+    elif message.text == "Macchiato Short - 0.5ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 6.99$"
+            )
+    elif message.text == "Frappe Grande - 0.7ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 6.99$"
+            )
+    elif message.text == "Frappe Tall - 0.6ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 5.99$"
+            )
+    elif message.text == "Frappe Short - 0.5ml":
+        bot.send_message(
+            message.chat.id,
+            "It will cost you 4.99$"
+            )
 
 
 bot.polling()
