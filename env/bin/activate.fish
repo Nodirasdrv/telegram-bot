@@ -30,7 +30,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/nodi/Desktop/Pyhton_bootcamp_8_30/project_coffee_bot/env"
+set -gx VIRTUAL_ENV "/Users/nodi/Desktop/telegram-bot/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

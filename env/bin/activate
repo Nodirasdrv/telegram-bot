@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/nodi/Desktop/Pyhton_bootcamp_8_30/project_coffee_bot/env"
+VIRTUAL_ENV="/Users/nodi/Desktop/telegram-bot/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
