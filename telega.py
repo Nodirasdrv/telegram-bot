@@ -7,6 +7,21 @@ bot = telebot.TeleBot(
 )
 
 
+@bot.message_handler(commands=["get"])
+def answer_start(message):
+    print(message.from_user.id)
+    text = f"{message.from_user.first_name}" \
+           f" {message.from_user.last_name}," \
+           f" would you like to pick up your beverage or delivery?"
+    keyboard_in = types.InlineKeyboardMarkup()
+    btn_6 = types.InlineKeyboardButton(text="Pick up", callback_data="pick up")
+    btn_7 = types.InlineKeyboardButton(text="Delivery", callback_data="delivery")
+
+    keyboard_in.add(btn_6, btn_7)
+
+    bot.send_message(message.chat.id, text, reply_markup=keyboard_in)
+
+
 @bot.message_handler(commands=["start"])
 def answer_start(message):
     print(message.from_user.id)
@@ -72,6 +87,14 @@ def send_course(call):
         text = f"You chose {call.data}!"
         bot.send_message(call.message.chat.id, text,
                          reply_markup=murkup_reply)
+    elif call.data == "pick up":
+        text = f"You chose {call.data}!" \
+               f" Pick up your drink at Garden Street 34 - Coffee Shop 'Sip-sip' "
+        bot.send_message(call.message.chat.id, text)
+    elif call.data == "delivery":
+        text = f"You chose {call.data}!" \
+               f"Please leave your address!"
+        bot.send_message(call.message.chat.id, text)
 
 
 @bot.message_handler(content_types=["text"])
@@ -80,75 +103,120 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "It will cost you 6.99$")
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Capuccino Tall - 0.4ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 4.99$"
         )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Capuccino Short - 0.2ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 3.99$"
         )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Latte Grande - 0.7ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 7.99$")
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Latte Tall - 0.4ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 6.99$"
         )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Latte Short - 0.2ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 5.99$"
         )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Espresso Grande - 0.5ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 3.99$"
         )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Espresso Tall - 0.3ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 2.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Espresso Short - 0.2ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 1.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Macchiato Grande - 0.9ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 8.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Macchiato Tall - 0.7ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 7.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Macchiato Short - 0.5ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 6.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Frappe Grande - 0.7ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 6.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Frappe Tall - 0.6ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 5.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
     elif message.text == "Frappe Short - 0.5ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 4.99$"
-            )
+        )
+        bot.send_message(
+            message.chat.id,
+            "Want to get your coffee? Write /get")
 
 
 bot.polling()
