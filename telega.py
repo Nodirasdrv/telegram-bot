@@ -7,6 +7,21 @@ bot = telebot.TeleBot(
 )
 
 
+@bot.message_handler(commands=["pay"])
+def answer_start(message):
+    print(message.from_user.id)
+    text = f"{message.from_user.first_name}" \
+           f" {message.from_user.last_name}," \
+           f" would you like to use your card or pay with cash?"
+    keyboard_in = types.InlineKeyboardMarkup()
+    btn_8 = types.InlineKeyboardButton(text="Card", callback_data="card")
+    btn_9 = types.InlineKeyboardButton(text="Cash", callback_data="cash")
+
+    keyboard_in.add(btn_8, btn_9)
+
+    bot.send_message(message.chat.id, text, reply_markup=keyboard_in)
+
+
 @bot.message_handler(commands=["get"])
 def answer_start(message):
     print(message.from_user.id)
@@ -89,11 +104,24 @@ def send_course(call):
                          reply_markup=murkup_reply)
     elif call.data == "pick up":
         text = f"You chose {call.data}!" \
-               f" Pick up your drink at Garden Street 34 - Coffee Shop 'Sip-sip' "
+               f" Pick up your drink at Garden Street 34 - Coffee Shop 'Sip-sip'. " \
+               f"Ready to pay? Write /pay"
+
         bot.send_message(call.message.chat.id, text)
+
     elif call.data == "delivery":
         text = f"You chose {call.data}!" \
-               f"Please leave your address!"
+               f"Please leave your address!" \
+               f"If ready to pay. Write /pay"
+
+        bot.send_message(call.message.chat.id, text)
+    elif call.data == "card":
+        text = f"Paying with {call.data}, good choice!" \
+               f"Please use MegaPay and send money to 12893!"
+        bot.send_message(call.message.chat.id, text)
+    elif call.data == "cash":
+        text = f"Paying with {call.data}, good choice!" \
+               f"Please pay to the delivery man or pay at the Coffee Shop!"
         bot.send_message(call.message.chat.id, text)
 
 
