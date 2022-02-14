@@ -1,6 +1,8 @@
 import telebot
 from decouple import config
 from telebot import types
+import emoji
+
 
 bot = telebot.TeleBot(
     token=config("TOKEN_BOT")
@@ -16,7 +18,6 @@ def answer_start(message):
     keyboard_in = types.InlineKeyboardMarkup()
     btn_8 = types.InlineKeyboardButton(text="Card", callback_data="card")
     btn_9 = types.InlineKeyboardButton(text="Cash", callback_data="cash")
-
     keyboard_in.add(btn_8, btn_9)
 
     bot.send_message(message.chat.id, text, reply_markup=keyboard_in)
@@ -34,7 +35,7 @@ def answer_start(message):
 
     keyboard_in.add(btn_6, btn_7)
 
-    bot.send_message(message.chat.id, text, reply_markup=keyboard_in)
+    bot.send_message(message.chat.id, text + emoji.emojize(":hot_beverage:"), reply_markup=keyboard_in)
 
 
 @bot.message_handler(commands=["start"])
@@ -45,14 +46,15 @@ def answer_start(message):
            f"Do you want to order some coffee?" \
            f" What kind of coffee do you want to order?"
     keyboard_in = types.InlineKeyboardMarkup()
-    btn_1 = types.InlineKeyboardButton(text="Capuccino", callback_data="capuccino")
-    btn_2 = types.InlineKeyboardButton(text="Latte", callback_data="latte")
-    btn_3 = types.InlineKeyboardButton(text="Espresso", callback_data="espresso")
-    btn_4 = types.InlineKeyboardButton(text="Macchiato", callback_data="macchiato")
-    btn_5 = types.InlineKeyboardButton(text="Frappe", callback_data="frappe")
+    btn_1 = types.InlineKeyboardButton(text="Capuccino" + emoji.emojize(":hot_beverage:"), callback_data="capuccino")
+    btn_2 = types.InlineKeyboardButton(text="Latte" + emoji.emojize(":glass_of_milk:"), callback_data="latte")
+    btn_3 = types.InlineKeyboardButton(text="Espresso" + emoji.emojize(":mate:"), callback_data="espresso")
+    btn_4 = types.InlineKeyboardButton(text="Macchiato" + emoji.emojize(":bubble_tea:"), callback_data="macchiato")
+    btn_5 = types.InlineKeyboardButton(text="Frappe" + emoji.emojize(":tropical_drink:"), callback_data="frappe")
     keyboard_in.add(btn_1, btn_2, btn_3, btn_4, btn_5)
 
     bot.send_message(message.chat.id, text, reply_markup=keyboard_in)
+
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -66,6 +68,8 @@ def send_course(call):
         text = f"You chose {call.data}!"
         bot.send_message(call.message.chat.id, text,
                          reply_markup=murkup_reply)
+
+
     elif call.data == "latte":
         murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn_1 = types.KeyboardButton("Latte Grande - 0.7ml")
@@ -75,6 +79,7 @@ def send_course(call):
         text = f"You chose {call.data}!"
         bot.send_message(call.message.chat.id, text,
                          reply_markup=murkup_reply)
+
     elif call.data == "espresso":
         murkup_reply = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn_1 = types.KeyboardButton("Espresso Grande - 0.5ml")
@@ -134,6 +139,9 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto"
+                                              "=compress&cs=tinysrgb&dpr=2&w=500")
+
     elif message.text == "Capuccino Tall - 0.4ml":
         bot.send_message(
             message.chat.id,
@@ -142,6 +150,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/2638019/pexels-photo-2638019.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Capuccino Short - 0.2ml":
         bot.send_message(
             message.chat.id,
@@ -150,6 +160,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/428310/pexels-photo-428310.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
+
     elif message.text == "Latte Grande - 0.7ml":
         bot.send_message(
             message.chat.id,
@@ -157,6 +169,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/11160146/pexels-photo-11160146.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Latte Tall - 0.4ml":
         bot.send_message(
             message.chat.id,
@@ -165,6 +179,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/11160115/pexels-photo-11160115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Latte Short - 0.2ml":
         bot.send_message(
             message.chat.id,
@@ -173,6 +189,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/11160145/pexels-photo-11160145.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Espresso Grande - 0.5ml":
         bot.send_message(
             message.chat.id,
@@ -181,6 +199,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/2299028/pexels-photo-2299028.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Espresso Tall - 0.3ml":
         bot.send_message(
             message.chat.id,
@@ -189,6 +209,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/733763/pexels-photo-733763.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Espresso Short - 0.2ml":
         bot.send_message(
             message.chat.id,
@@ -197,6 +219,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/685527/pexels-photo-685527.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
+
     elif message.text == "Macchiato Grande - 0.9ml":
         bot.send_message(
             message.chat.id,
@@ -205,6 +229,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/7729537/pexels-photo-7729537.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
+
     elif message.text == "Macchiato Tall - 0.7ml":
         bot.send_message(
             message.chat.id,
@@ -213,6 +239,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/10267951/pexels-photo-10267951.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Macchiato Short - 0.5ml":
         bot.send_message(
             message.chat.id,
@@ -221,6 +249,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/685529/pexels-photo-685529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Frappe Grande - 0.7ml":
         bot.send_message(
             message.chat.id,
@@ -229,6 +259,8 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/7091587/pexels-photo-7091587.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+
     elif message.text == "Frappe Tall - 0.6ml":
         bot.send_message(
             message.chat.id,
@@ -237,14 +269,18 @@ def send_good_message(message):
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/5314623/pexels-photo-5314623.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
+
     elif message.text == "Frappe Short - 0.5ml":
         bot.send_message(
             message.chat.id,
             "It will cost you 4.99$"
         )
+
         bot.send_message(
             message.chat.id,
             "Want to get your coffee? Write /get")
+        bot.send_photo(message.chat.id, photo="https://images.pexels.com/photos/230588/pexels-photo-230588.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 
 
 bot.polling()
